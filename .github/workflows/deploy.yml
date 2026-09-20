@@ -35,7 +35,11 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /demo-realstate
         run: npm run build
 
+      # enablement turns Pages on via the API the first time, so the repo does
+      # not have to be configured by hand before the first run.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
