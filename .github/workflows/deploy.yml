@@ -30,9 +30,11 @@ jobs:
       - run: npm ci
 
       - name: Build static export
-        # Repo is served from /demo-realstate/, so every URL needs that prefix.
+        # Custom domain serves from the ROOT (https://realestate.sigmoidauto.com/),
+        # so there is no path prefix. Set this back to /demo-realstate only if
+        # you go back to the github.io URL.
         env:
-          NEXT_PUBLIC_BASE_PATH: /demo-realstate
+          NEXT_PUBLIC_BASE_PATH: ''
         run: npm run build
 
       # enablement turns Pages on via the API the first time, so the repo does
