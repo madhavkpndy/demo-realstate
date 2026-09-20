@@ -2,6 +2,7 @@
 
 import Reveal from './Reveal'
 import { tokens } from '../tokens'
+import { asset } from '../basePath'
 
 export default function StorySection() {
   return (
@@ -25,7 +26,7 @@ export default function StorySection() {
           <figure style={{ position: 'relative', order: 0 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/scenes/scene07-2048.webp"
+              src={asset('/scenes/scene07-2048.webp')}
               alt="The rear terrace and pool of an Altura villa at dusk"
               style={{
                 display: 'block',

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { tokens } from '../tokens'
+import { asset } from '../basePath'
 
 /**
  * The walk-in. Seven scenes, one viewport of scroll each, so a single gesture
@@ -369,7 +370,7 @@ function Scene({
     >
       <div
         className="enter-layer-ph"
-        style={{ backgroundImage: `url(/scenes/scene${n}p.webp)` }}
+        style={{ backgroundImage: `url(${asset(`/scenes/scene${n}p.webp`)})` }}
         aria-hidden
       />
       <picture>
@@ -382,8 +383,8 @@ function Scene({
             media="(max-width: 767px) and (orientation: portrait)"
             type="image/webp"
             srcSet={
-              '/scenes/scene01-p900.webp 900w, ' +
-              '/scenes/scene01-p1280.webp 1280w'
+              `${asset('/scenes/scene01-p900.webp')} 900w, ` +
+              `${asset('/scenes/scene01-p1280.webp')} 1280w`
             }
             sizes="110vw"
           />
@@ -391,10 +392,10 @@ function Scene({
         <source
           type="image/webp"
           srcSet={
-            `/scenes/scene${n}-1280.webp 1280w, ` +
-            `/scenes/scene${n}-2048.webp 2048w, ` +
-            `/scenes/scene${n}-3072.webp 3072w, ` +
-            `/scenes/scene${n}-4096.webp 4096w`
+            `${asset(`/scenes/scene${n}-1280.webp`)} 1280w, ` +
+            `${asset(`/scenes/scene${n}-2048.webp`)} 2048w, ` +
+            `${asset(`/scenes/scene${n}-3072.webp`)} 3072w, ` +
+            `${asset(`/scenes/scene${n}-4096.webp`)} 4096w`
           }
           /* Each scene fills the viewport and zooms to 1.17, so ask for
              appreciably more than 100vw or it renders upscaled and soft. */
@@ -411,7 +412,7 @@ function Scene({
             the attribute as mismatched. The eager/lazy split below already
             does the prioritising, and scene 1 is the LCP image anyway. */}
         <img
-          src={`/scenes/scene${n}-2048.webp`}
+          src={asset(`/scenes/scene${n}-2048.webp`)}
           alt={alt}
           decoding="async"
           loading={index <= 1 ? 'eager' : 'lazy'}

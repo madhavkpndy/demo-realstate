@@ -2,6 +2,7 @@
 
 import Reveal from './Reveal'
 import { tokens } from '../tokens'
+import { asset } from '../basePath'
 
 export default function ExperienceSection() {
   return (
@@ -142,7 +143,7 @@ export default function ExperienceSection() {
           <figure style={{ position: 'relative' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/scenes/scene04-2048.webp"
+              src={asset('/scenes/scene04-2048.webp')}
               alt="The living room of an Altura villa, floor-to-ceiling glazing opening to the garden"
               style={{
                 display: 'block',
