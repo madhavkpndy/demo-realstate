@@ -1,0 +1,119 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Proximity (not mandatory) so only the hero snaps — the rest of the page
+   scrolls freely. scroll-snap-stop:always is what guarantees one gesture
+   can never skip past a scene. */
+html {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #F4EFE7;
+  color: #2C2924;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-snap-type: none; scroll-behavior: auto; }
+}
+
+/* ─── Walk-in hero ─────────────────────────────────────────────────────── */
+
+.enter-track { position: relative; }
+
+/* The stage stays in flow and counts as the FIRST scene's viewport; the
+   spacers below supply the rest. No negative margin — collapsing the margin
+   box to zero would stretch sticky's range by a whole viewport and leave the
+   hero pinned over the section beneath it. */
+.enter-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #F4EFE7;
+  z-index: 1;
+}
+
+.enter-snap {
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.enter-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
+/* Both the stand-in and the picture are positioned, so the picture — later in
+   the DOM — paints above it. Without this the img stays unpositioned and the
+   absolutely-positioned blur covers it. */
+.enter-layer picture {
+  position: absolute;
+  inset: 0;
+}
+
+.enter-layer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 32px blurred stand-in, so a scene is never a blank rectangle. */
+.enter-layer-ph {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px);
+  transform: scale(1.08);
+}
+
+.enter-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+
+.hero-aside {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(400px, 62vw);
+}
+.hero-aside--right { right: clamp(1.75rem, 7vw, 6rem); text-align: right; }
+.hero-aside--left  { left:  clamp(1.75rem, 7vw, 6rem); text-align: left; }
+
+.hero-scrim { position: absolute; inset: 0; }
+.hero-scrim--right {
+  background: linear-gradient(to left,
+    rgba(32,25,18,0.74) 0%, rgba(32,25,18,0.40) 42%, transparent 82%);
+}
+.hero-scrim--left {
+  background: linear-gradient(to right,
+    rgba(32,25,18,0.74) 0%, rgba(32,25,18,0.40) 42%, transparent 82%);
+}
+
+@media (max-width: 767px) {
+  .hero-aside {
+    top: auto;
+    bottom: 14vh;
+    left: 1.5rem;
+    right: 1.5rem;
+    max-width: none;
+    transform: none;
+    text-align: left;
+  }
+  .hero-aside--right, .hero-aside--left { text-align: left; }
+  /* Portrait crops a landscape frame hard; bias it up the building so the
+     roofline and sky stay visible instead of a mid-facade slab. */
+  .enter-layer img { object-position: 50% 38%; }
+  /* Scene 1 serves a purpose-framed portrait crop, so leave it centred. */
+  .enter-layer--hero img { object-position: 50% 50%; }
+
+  .hero-scrim--right, .hero-scrim--left {
+    background: linear-gradient(to top,
+      rgba(32,25,18,0.82) 0%, rgba(32,25,18,0.55) 34%,
+      rgba(32,25,18,0.15) 62%, transparent 88%);
+  }
+}
